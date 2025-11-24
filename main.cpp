@@ -5,10 +5,17 @@
 #include <iostream>
 #include <cstdlib>
 
+#include "util.h"
 
 int main() {
     int nthreads, tid;
     tid = -1;
+
+    std::string file_in = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/rockyou.txt";
+    std::string file_out = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/password_file.txt";  ///< File delle password
+    std::cout << "Lettura file password e selezione delle password conformi..." << std::endl;
+    checkPasswords(file_in, file_out);
+    std::cout << "Password conformi salvate in: " << file_out << std::endl;
 
 #ifdef _OPENMP
     std::cout << "_OPENMP defined" << std::endl;
