@@ -8,6 +8,51 @@
 
 using namespace std;
 
+void SplashScreen() {
+
+    cout << "Questo programma implementa un attacco brute-force per"<< endl;
+    cout << "decifrare password di otto caratteri crittografate con DES"<< endl;
+    cout << "confrontando i costi computazionali di una versione sequentail"<< endl;
+    cout << "e di una versione parallela di un attacco brute-force alle password,"<< endl;
+    cout << "valutando la velocità ottenuta in diverse situazioni di test"<< endl;
+    cout << "tramite parallelizzazione."<< endl;
+}
+
+void choosePwd(const string& filein,const string& fileout,string& password) {
+    ifstream inputf(filein);
+    if (!inputf) {
+        cerr << "Errore: impossibile aprire il file delle password: " << filein << endl;
+        return ;
+    }
+
+    string pwd;
+    cout << endl<<"============================="<< endl;
+    cout << "   Scegli una password"<< endl;
+
+    bool viewOtherPWD = true;
+    while (viewOtherPWD) {
+        if(getline(inputf, pwd)){
+            cout << "============================="<< endl;
+            cout << "1. "<<pwd<< endl;
+            cout << "2. Mostra altra Password"<< endl;
+
+            int choice;
+            cin >> choice;
+
+            if (choice == 1) {
+                password=pwd;
+                cout << "Hai scelto la password:"<<password<<endl;
+                viewOtherPWD = false;
+            } else if (choice != 2) {
+                cout << "\nScelta non valida. Riprova di nuovo.\n";
+            }
+        }
+    }
+    inputf.close();
+    return ;
+}
+
+
 void checkPasswords(const string& filein, const string& fileout) {
     ifstream inputf(filein);
     if (!inputf) {
@@ -43,5 +88,36 @@ void checkPasswords(const string& filein, const string& fileout) {
         outputf << password << endl;
     }
     cout << "Le password conformi sono state salvate in: " << fileout << endl;
+    outputf.close();
+}
+
+
+
+void buildFilePasswords(const string& filein, const string& fileout, const string& password, int& pos) {
+    ifstream inputf(filein);
+    if (!inputf) {
+        cerr << "Errore: impossibile aprire il file delle password: " << filein << endl;
+        return;
+    }
+
+    ofstream outputf(fileout);
+    if (!outputf) {
+        cerr << "Errore: impossibile aprire il nuovo file delle password: " << fileout << endl;
+        return;
+    }
+    string pwd;
+    vector<string> pwds;
+    int i=0;
+    while (getline(inputf, pwd)) {
+        if (i%pos == 8)
+                pwds.push_back(password);
+        pwds.push_back(pwd);
+    }
+    inputf.close();
+
+    for (const auto& password : pwds) {
+        outputf << password << endl;
+    }
+    cout << "File password di test salvato in: " << fileout << endl;
     outputf.close();
 }

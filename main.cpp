@@ -13,9 +13,21 @@ int main() {
 
     std::string file_in = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/rockyou.txt";
     std::string file_out = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/password_file.txt";  ///< File delle password
+    std::string file_tmp = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/password_file.tmp";  ///< File delle password per i test
+
+
+    SplashScreen();
+
     std::cout << "Lettura file password e selezione delle password conformi..." << std::endl;
     checkPasswords(file_in, file_out);
     std::cout << "Password conformi salvate in: " << file_out << std::endl;
+
+    std::string password;
+    choosePwd(file_out ,file_tmp, password);
+
+    cout << "I test saranno effettuati su questa password:"<<password<<endl;
+
+
 
 #ifdef _OPENMP
     std::cout << "_OPENMP defined" << std::endl;
