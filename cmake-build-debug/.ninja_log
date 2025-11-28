@@ -1,15 +1,13 @@
 # ninja log v5
-0	723	1764095617277521400	CMakeFiles/passwordDecryption.dir/main.cpp.o	2036863eec699191
-3	3807	1764095620358703700	CMakeFiles/passwordDecryption.dir/util.cpp.o	c9458ea9e2dd4e1b
-3810	4186	1764095620739533700	passwordDecryption	6c3d9bb9f2411e17
-1	3907	1764097050576487900	CMakeFiles/passwordDecryption.dir/util.cpp.o	c9458ea9e2dd4e1b
-3908	4245	1764097050916303800	passwordDecryption	6c3d9bb9f2411e17
-1	4594	1764097088999157400	CMakeFiles/passwordDecryption.dir/util.cpp.o	c9458ea9e2dd4e1b
-4594	4944	1764097089350751000	passwordDecryption	6c3d9bb9f2411e17
-3	3890	1764097302446156800	CMakeFiles/passwordDecryption.dir/util.cpp.o	c9458ea9e2dd4e1b
-1	743	1764097342199670800	CMakeFiles/passwordDecryption.dir/main.cpp.o	2036863eec699191
-9	4394	1764097345847522800	CMakeFiles/passwordDecryption.dir/util.cpp.o	c9458ea9e2dd4e1b
-4394	4705	1764097346161898800	passwordDecryption	6c3d9bb9f2411e17
-2	1160	1764097873708190800	CMakeFiles/passwordDecryption.dir/main.cpp.o	2036863eec699191
+0	24	1764348665549594400	build.ninja	f04db1ca269679f4
+1	348	1764167831381511000	CMakeFiles/passwordDecryption.dir/utilCrypt.cpp.o	6e0a3610fe283648
+1315	1772	1764167867010357400	passwordDecryption	b3193b615f204186
 13	4499	1764097877047005500	CMakeFiles/passwordDecryption.dir/util.cpp.o	c9458ea9e2dd4e1b
-4499	4814	1764097877364793500	passwordDecryption	6c3d9bb9f2411e17
+1	1314	1764167866552626700	CMakeFiles/passwordDecryption.dir/decryptSequential.cpp.o	482fa6a1a7209d29
+2	1160	1764097873708190800	CMakeFiles/passwordDecryption.dir/main.cpp.o	2036863eec699191
+0	27	0	clean	4c87bfdd332e5edb
+26	1121	1764348672886438200	CMakeFiles/passwordDecryption.dir/utilCrypt.cpp.o	6e0a3610fe283648
+1	1185	1764348672950857200	CMakeFiles/passwordDecryption.dir/main.cpp.o	2036863eec699191
+1121	3368	1764348675133851800	CMakeFiles/passwordDecryption.dir/decryptSequential.cpp.o	482fa6a1a7209d29
+14	6702	1764348678462967000	CMakeFiles/passwordDecryption.dir/util.cpp.o	c9458ea9e2dd4e1b
+6702	7089	1764348678854063300	passwordDecryption	b3193b615f204186
