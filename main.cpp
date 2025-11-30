@@ -4,12 +4,19 @@
 #include <cstdio>
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 
 #include "util.h"
+#include "utilCrypt.h"
+#include "decryptSequential.h"
 
 int main() {
     int nthreads, tid;
     tid = -1;
+
+
+    string crypted_password = cryptDES("password");
+    std::cout << "pwd crypted " <<crypted_password<< std::endl;
 
     std::string file_in = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/rockyou.txt";
     std::string file_out = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/password_file.txt";  ///< File delle password
@@ -19,14 +26,15 @@ int main() {
     SplashScreen();
 
     std::cout << "Lettura file password e selezione delle password conformi..." << std::endl;
-    checkPasswords(file_in, file_out);
+    buildFilePasswords(file_in, file_out);
     std::cout << "Password conformi salvate in: " << file_out << std::endl;
 
     std::string password;
     choosePwd(file_out ,file_tmp, password);
 
     cout << "I test saranno effettuati su questa password:"<<password<<endl;
-
+    std::vector<std::string> passwordList = loadPasswords(file_out);
+    TestSeq(password, "abc",passwordList,10);
 
 
 #ifdef _OPENMP

@@ -26,6 +26,7 @@ void choosePwd(const string& filein,const string& fileout,string& password) {
     }
 
     string pwd;
+    password="";
     cout << endl<<"============================="<< endl;
     cout << "   Scegli una password"<< endl;
 
@@ -53,16 +54,21 @@ void choosePwd(const string& filein,const string& fileout,string& password) {
 }
 
 
-void checkPasswords(const string& filein, const string& fileout) {
+void buildFilePasswords(const string& filein, const string& fileout) {
     ifstream inputf(filein);
     if (!inputf) {
         cerr << "Errore: impossibile aprire il file delle password: " << filein << endl;
         return;
     }
 
+    if(filesystem::exists(fileout)) {
+        cout << "Trovato un file delle password. Non verrà ricreato!!!" << endl;
+        return;
+    }
+
     ofstream outputf(fileout);
     if (!outputf) {
-        cerr << "Errore: impossibile aprire il nuovo file delle password: " << fileout << endl;
+        cout << "Errore: impossibile aprire il nuovo file delle password: " << fileout << endl;
         return;
     }
 
@@ -92,32 +98,14 @@ void checkPasswords(const string& filein, const string& fileout) {
 }
 
 
+std::vector<std::string> loadPasswords(const std::string& filepwd) {
+    std::vector<std::string> passwords;
+    std::ifstream filep(filepwd);
+    std::string password;
 
-void buildFilePasswords(const string& filein, const string& fileout, const string& password, int& pos) {
-    ifstream inputf(filein);
-    if (!inputf) {
-        cerr << "Errore: impossibile aprire il file delle password: " << filein << endl;
-        return;
+    while (getline(filep, password)) {
+        passwords.push_back(password);
     }
 
-    ofstream outputf(fileout);
-    if (!outputf) {
-        cerr << "Errore: impossibile aprire il nuovo file delle password: " << fileout << endl;
-        return;
-    }
-    string pwd;
-    vector<string> pwds;
-    int i=0;
-    while (getline(inputf, pwd)) {
-        if (i%pos == 8)
-                pwds.push_back(password);
-        pwds.push_back(pwd);
-    }
-    inputf.close();
-
-    for (const auto& password : pwds) {
-        outputf << password << endl;
-    }
-    cout << "File password di test salvato in: " << fileout << endl;
-    outputf.close();
+    return passwords;
 }
