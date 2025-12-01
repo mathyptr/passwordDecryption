@@ -30,10 +30,10 @@ int main() {
     std::cout << "Password conformi salvate in: " << file_out << std::endl;
 
     std::string password;
-    choosePwd(file_out ,file_tmp, password);
 
     cout << "I test saranno effettuati su questa password:"<<password<<endl;
     std::vector<std::string> passwordList = loadPasswords(file_out);
+    choosePwd(passwordList, password);
     TestSeq(password, "abc",passwordList,10);
 
 

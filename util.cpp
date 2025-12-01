@@ -18,12 +18,7 @@ void SplashScreen() {
     cout << "tramite parallelizzazione."<< endl;
 }
 
-void choosePwd(const string& filein,const string& fileout,string& password) {
-    ifstream inputf(filein);
-    if (!inputf) {
-        cerr << "Errore: impossibile aprire il file delle password: " << filein << endl;
-        return ;
-    }
+void choosePwd(vector<string> passwordList,string& password) {
 
     string pwd;
     password="";
@@ -32,7 +27,8 @@ void choosePwd(const string& filein,const string& fileout,string& password) {
 
     bool viewOtherPWD = true;
     while (viewOtherPWD) {
-        if(getline(inputf, pwd)){
+        int i=0;
+        for (const auto& pwd : passwordList) {
             cout << "============================="<< endl;
             cout << "1. "<<pwd<< endl;
             cout << "2. Mostra altra Password"<< endl;
@@ -43,13 +39,15 @@ void choosePwd(const string& filein,const string& fileout,string& password) {
             if (choice == 1) {
                 password=pwd;
                 cout << "Hai scelto la password:"<<password<<endl;
+                passwordList.erase(passwordList.begin() + i);
                 viewOtherPWD = false;
+                break;
             } else if (choice != 2) {
                 cout << "\nScelta non valida. Riprova di nuovo.\n";
             }
+            i++;
         }
     }
-    inputf.close();
     return ;
 }
 

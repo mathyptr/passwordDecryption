@@ -7,7 +7,7 @@
 using namespace std;
 
 void SplashScreen();
-void choosePwd(const string& filein,const string& fileout,string& password);
+void choosePwd(vector<string> passwordList,string& password);
 void buildFilePasswords(const string& filein, const string& fileout);
 //void buildFilePasswords(const string& filein, const string& fileout, const string& password, int& pos);
 std::vector<std::string> loadPasswords(const std::string& filepwd);
