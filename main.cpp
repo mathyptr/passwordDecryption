@@ -31,11 +31,14 @@ int main() {
 
     std::string password;
 
-    cout << "I test saranno effettuati su questa password:"<<password<<endl;
     std::vector<std::string> passwordList = loadPasswords(file_out);
     choosePwd(passwordList, password);
-    TestSeq(password, "abc",passwordList,10);
+    cout << "I test saranno effettuati su questa password:"<<password<<endl;
 
+    SequentialRes seqr;
+    seqr=TestSeq(password, "abc",passwordList,10);
+    std::string title="Risultati test sequenziale";
+    SplashResult(title,seqr);
 
 #ifdef _OPENMP
     std::cout << "_OPENMP defined" << std::endl;

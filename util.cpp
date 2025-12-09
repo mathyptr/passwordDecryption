@@ -5,18 +5,33 @@
 #include <string>
 #include <regex>
 #include <vector>
+#include <cmath>
+#include <numeric>
 
 using namespace std;
 
 void SplashScreen() {
-
+    cout << "############################"<<endl;
     cout << "Questo programma implementa un attacco brute-force per"<< endl;
     cout << "decifrare password di otto caratteri crittografate con DES"<< endl;
     cout << "confrontando i costi computazionali di una versione sequentail"<< endl;
     cout << "e di una versione parallela di un attacco brute-force alle password,"<< endl;
     cout << "valutando la velocità ottenuta in diverse situazioni di test"<< endl;
     cout << "tramite parallelizzazione."<< endl;
+    cout << "############################"<<endl;
 }
+
+void SplashResult(string& title,SequentialRes& seqr) {
+    cout << "############################"<<endl;
+    cout << title<< endl;
+    cout << "Tempo medio: "<<seqr.mean_time<< endl;
+    cout << "Deviazione Standard: "<<seqr.stddev_time<< endl;
+    cout << "Tempo massimo: "<<seqr.max_time<< endl;
+    cout << "Tempo minimo: "<<seqr.min_time<< endl;
+    cout << "############################"<<endl;
+}
+
+
 
 void choosePwd(vector<string> passwordList,string& password) {
 
@@ -53,14 +68,15 @@ void choosePwd(vector<string> passwordList,string& password) {
 
 
 void buildFilePasswords(const string& filein, const string& fileout) {
-    ifstream inputf(filein);
-    if (!inputf) {
-        cerr << "Errore: impossibile aprire il file delle password: " << filein << endl;
-        return;
-    }
 
     if(filesystem::exists(fileout)) {
         cout << "Trovato un file delle password. Non verrà ricreato!!!" << endl;
+        return;
+    }
+
+    ifstream inputf(filein);
+    if (!inputf) {
+        cerr << "Errore: impossibile aprire il file delle password: " << filein << endl;
         return;
     }
 
@@ -107,3 +123,29 @@ std::vector<std::string> loadPasswords(const std::string& filepwd) {
 
     return passwords;
 }
+
+double minTime(std::vector<double> execTimes) {
+
+    return *std::min_element(execTimes.begin(), execTimes.end());
+}
+double maxTime(std::vector<double> execTimes) {
+
+    return *std::max_element(execTimes.begin(), execTimes.end());
+}
+double meanTime(std::vector<double> execTimes) {
+
+    return std::accumulate(execTimes.begin(), execTimes.end(), 0.0)/ execTimes.size();
+}
+
+double stdDev(std::vector<double> execTimes) {
+    double variance = 0.0;
+    for (const auto& time : execTimes)
+           variance += std::pow(time - meanTime(execTimes), 2);
+    return std::sqrt(variance / execTimes.size());
+}
+
+
+           
+
+
+

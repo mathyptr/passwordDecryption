@@ -3,8 +3,10 @@
 
 #include <string>
 #include <vector>
+#include "util.h"
+
 using namespace std;
 
-void TestSeq(const std::string& password,const std::string& salt,std::vector<std::string> passwordList,int iter);
+SequentialRes TestSeq(const std::string& password,const std::string& salt,std::vector<std::string> passwordList,int iter);
 
 #endif // DECRYPT_SEQUENTIAL_H

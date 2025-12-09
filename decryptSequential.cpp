@@ -7,6 +7,7 @@
 #include <chrono>
 #include <cmath> 
 #include "utilCrypt.h"
+#include "util.h"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ std::string decryptDESwithDict(const std::string& encrypted_password,
 }
 
 
-void TestSeq(const string& password, const string& salt,vector<string> passwordList, int iter) {
+SequentialRes TestSeq(const string& password, const string& salt,vector<string> passwordList, int iter) {
 
     vector<double> execution_times;
     vector<int> positions;
@@ -71,6 +72,12 @@ void TestSeq(const string& password, const string& salt,vector<string> passwordL
         }
         passwordList[block*i]=pwdtmp;
         }
+    SequentialRes seqr;
+    seqr.max_time=maxTime(execution_times);
+    seqr.min_time=minTime(execution_times);
+    seqr.mean_time=meanTime(execution_times);
+    seqr.stddev_time=stdDev(execution_times);
+    return seqr;
     }
 
 
