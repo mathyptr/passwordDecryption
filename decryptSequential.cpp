@@ -28,7 +28,7 @@ std::string decryptDESwithDict(const std::string& encrypted_password,
 
 testResult TestSeq(const string& password, const string& salt,vector<string> passwordList, int iter) {
 
-    vector<double> execution_times;
+    vector<double> execTimes;
     vector<int> positions;
 
 //    string encrypted_password = cryptDES(password, salt);
@@ -41,6 +41,9 @@ testResult TestSeq(const string& password, const string& salt,vector<string> pas
     cout << "##### Test Sequenziale #####"<<endl;
 
     for (int i = 0; i < iter; ++i) {
+        cout << "############################"<<endl;
+        cout << "Iter num: " << i + 1 << endl;
+
         pwdtmp=passwordList[block*i];
         passwordList[block*i]=password;
 
@@ -59,24 +62,24 @@ testResult TestSeq(const string& password, const string& salt,vector<string> pas
         auto end = chrono::high_resolution_clock::now();
 
         chrono::duration<double> elapsed = end - start;
-        execution_times.push_back(elapsed.count());
+        execTimes.push_back(elapsed.count());
 
         if (pwddecrypted == crypted_password) {
-            cout << "Iter num: " << i + 1 << ", Password trovata. " << endl;
+            cout << "Password trovata. " << endl;
             cout << "Tempo di esecuzione: " << elapsed.count() << "s." << endl;
             cout << "Posizione: " << pos << endl;
         }
         else {
-            cout << "Iter num: " << i + 1 << ", Password non trovata!!!" << endl;
+            cout << ", Password non trovata!!!" << endl;
             cout << "Tempo di esecuzione: " << elapsed.count() << "s." << endl;
         }
         passwordList[block*i]=pwdtmp;
         }
     testResult seqr;
-    seqr.max_time=maxTime(execution_times);
-    seqr.min_time=minTime(execution_times);
-    seqr.mean_time=meanTime(execution_times);
-    seqr.stddev_time=stdDev(execution_times);
+    seqr.max_time=maxTime(execTimes);
+    seqr.min_time=minTime(execTimes);
+    seqr.mean_time=meanTime(execTimes);
+    seqr.stddev_time=stdDev(execTimes);
     seqr.num_password=passwordList.size();
     seqr.num_iter= iter;
     seqr.test_type=SEQUENTIAL;

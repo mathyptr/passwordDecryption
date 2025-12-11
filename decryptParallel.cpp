@@ -48,7 +48,7 @@ std::vector<testResult> testPar(const std::string& password, const std::string& 
     std::vector<std::string> passwordList, const std::vector<int>& thread_counts, int iter) {
     std::vector<testResult> all_results;
 
-    std::vector<int> chunkSizes = { 500, 1000, 2000, 4000 };
+    std::vector<int> chunkSizes = { 500 };
     string pwdtmp;
     // Ottimizza la priorità del processo
 //MATHY    HANDLE process = GetCurrentProcess();
@@ -73,7 +73,6 @@ std::vector<testResult> testPar(const std::string& password, const std::string& 
 //MATHY            SetProcessAffinityMask(process, mask);
 
             std::vector<double> execTimes;
-            std::vector<size_t> positions;
             const size_t list_size = passwordList.size();
             int block = passwordList.size() / iter;
 
@@ -84,6 +83,9 @@ std::vector<testResult> testPar(const std::string& password, const std::string& 
 
             // Esegue i test multipli
             for (int i = 0; i < iter; ++i) {
+                cout << "############################"<<endl;
+                cout << "Iter num: " << i + 1<< endl;
+
                 pwdtmp=passwordList[block*i];
                 passwordList[block*i]=password;
 
@@ -108,34 +110,34 @@ std::vector<testResult> testPar(const std::string& password, const std::string& 
                 passwordList[block*i]=pwdtmp;
 
                 // Output dei risultati
-                cout << "Esecuzione " << i + 1 << endl;
                 cout << " (chunk size " << chunkSize << "): "<< endl;
                 cout << "Tempo: " << elapsed.count() << " secondi. "<< endl;
-                cout << "Posizione: " << positions[i] << endl;
+                cout << "Posizione: " << block*i << endl;
             }
 
             // Calcola le statistiche
-            double min_time = minTime(execTimes);
-            double max_time = minTime(execTimes);
-            double mean_time = meanTime(execTimes);
-            double stddev = stdDev(execTimes);
+
+            testResult seqp;
+            seqp.threadNum=threadNum;
+            seqp.chunkSize=chunkSize;
+            seqp.max_time=maxTime(execTimes);
+            seqp.min_time=minTime(execTimes);
+            seqp.mean_time=meanTime(execTimes);
+            seqp.stddev_time=stdDev(execTimes);
+            seqp.num_password=passwordList.size();
+            seqp.num_iter= iter;
+            seqp.test_type=PARALLEL;
 
             // Output delle statistiche
-            cout << "\nStatistiche Test Parallelo (" << threadNum << " thread, "
+            cout << "Statistiche Test Parallelo (" << threadNum << " thread, "
                 << "chunk size " << chunkSize << "):" << endl;
-            cout << "- Tempo medio: " << mean_time << "s" << endl;
-            cout << "- Deviazione standard: " << stddev << "s" << endl;
-            cout << "- Tempo minimo: " << min_time << "s" << endl;
-            cout << "- Tempo massimo: " << max_time << "s" << endl;
-
-            // Salva i risultati
-//MATHY            thread_result.mean_time.push_back(mean_time);
-//MATHY            thread_result.execTimes = execTimes;
-//MATHY            thread_result.position = positions[positions.size() - 1];
-//MATHY            thread_result.chunkSizes.push_back(chunkSizes);
+            cout << "- Tempo medio: " << seqp.mean_time << "s" << endl;
+            cout << "- Deviazione standard: " << seqp.stddev_time << "s" << endl;
+            cout << "- Tempo minimo: " << seqp.min_time << "s" << endl;
+            cout << "- Tempo massimo: " << seqp.max_time << "s" << endl;
+            all_results.push_back(seqp);
         }
 
-        all_results.push_back(thread_result);
     }
 
     return all_results;

@@ -21,28 +21,52 @@ void SplashScreen() {
     cout << "################################################################"<<endl;
 }
 
-void SplashResult(string& title,testResult& seqr) {
+void SplashResult(string& title,std::vector<testResult>& result) {
     cout << "#####################################"<<endl;
     cout << title<< endl;
-    if( seqr.test_type==SEQUENTIAL)
+
+    for (const auto& res : result) {
+
+    if( res.test_type==SEQUENTIAL)
         cout << "TEST SEQUENZIALE"<< endl;
-    else if( seqr.test_type==PARALLEL)
+    else if( res.test_type==PARALLEL)
         cout << "TEST PARALLELO"<< endl;
     else
         cout<<"TEST TYPE NON DEFINITO"<< endl;
 
-    cout << "Numero Totale di password: "<<seqr.num_password<< endl;
-    cout << "Numero di Iterazioni: "<<seqr.num_iter<< endl;
-    cout << "Tempo medio: "<<seqr.mean_time<< endl;
-    cout << "Deviazione Standard: "<<seqr.stddev_time<< endl;
-    cout << "Tempo massimo: "<<seqr.max_time<< endl;
-    cout << "Tempo minimo: "<<seqr.min_time<< endl;
+    cout << "Numero Totale di password: "<<res.num_password<< endl;
+    cout << "Numero di Iterazioni: "<<res.num_iter<< endl;
+    cout << "Tempo medio: "<<res.mean_time<< endl;
+    cout << "Deviazione Standard: "<<res.stddev_time<< endl;
+    cout << "Tempo massimo: "<<res.max_time<< endl;
+    cout << "Tempo minimo: "<<res.min_time<< endl;
     cout << "#####################################"<<endl;
+    }
 }
 
+void saveResultToFile(const std::string& filename,std::vector<testResult>& result) {
+    std::ofstream fileCSV(filename);
+    fileCSV << "testType,numThreads,chunkSize,meanTime,stdDev,maxTime,minTime,pwdPosition,totalPasswords"<< endl;
 
+    for (const auto& res : result) {
+        if( res.test_type==SEQUENTIAL)
+            fileCSV << "SEQUENZIALE,";
+        else if( res.test_type==PARALLEL)
+            fileCSV << "PARALLELO,";
+        else
+            fileCSV<<"NON_DEFINITO,";
+        fileCSV << res.threadNum<<",";
+        fileCSV << res.chunkSize<<",";
+        fileCSV << res.mean_time<< ",";
+        fileCSV << res.stddev_time<< ",";
+        fileCSV << res.max_time<< ",";
+        fileCSV << res.min_time<< ",";
+        fileCSV << res.num_iter<< ",";
+        fileCSV << res.num_password<<endl;
+    }
+}
 
-void choosePwd(vector<string> passwordList,string& password) {
+void choosePwd(vector<string>& passwordList,string& password) {
 
     string pwd;
     password="";

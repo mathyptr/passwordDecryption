@@ -22,6 +22,8 @@ int main() {
     std::string file_in = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/rockyou.txt";
     std::string file_out = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/password_file.txt";  ///< File delle password
     std::string file_tmp = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/password_file.tmp";  ///< File delle password per i test
+    std::string file_inSeq = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/resultSEQ.csv";
+    std::string file_inPar = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/resultPAR.csv";
 
 
     SplashScreen();
@@ -34,17 +36,21 @@ int main() {
 
     std::vector<std::string> passwordList = loadPasswords(file_out);
     choosePwd(passwordList, password);
-    cout << "I test saranno effettuati su questa password:"<<password<<endl;
+    cout << "I test saranno effettuati su questa password: "<<password<<endl;
 
-    testResult seqr;
-    seqr=TestSeq(password, "abc",passwordList,10);
+    int iter = 4;
+
+    std::vector<testResult> seqr;
+    seqr.push_back(TestSeq(password, "abc",passwordList,iter));
     std::string title="Risultati test sequenziale";
     SplashResult(title,seqr);
+    saveResultToFile(file_inSeq,seqr);
 
     std::vector<testResult> parr;
-    std::vector<int> thread_counts = { 2, 3, 4, 5,6,7,8,9,10 };
-    parr=testPar(password, "abc",passwordList,thread_counts,10);
-
+    std::vector<int> thread_counts = { 2,4 };
+    parr=testPar(password, "abc",passwordList,thread_counts,iter);
+    SplashResult(title,parr);
+    saveResultToFile(file_inPar,parr);
 #ifdef _OPENMP
     std::cout << "_OPENMP defined" << std::endl;
     // OpenMP major + minor version

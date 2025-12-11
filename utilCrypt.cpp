@@ -26,11 +26,11 @@ string cryptDES(const std::string& password, const std::string& salt){
     seed[0] = time(NULL);
     seed[1] = getpid() ^ (seed[0] >> 14 & 0x30000);
 
-
+    struct crypt_data data[1] = {0};
 
     char salt1[12]="$1$12345678";
     /* Read in the user's password and encrypt it. */
-    p = crypt(password.c_str(), salt1);
+    p = crypt_r(password.c_str(), salt1,data);
 
     string pwd(p);
 //    free(p);
@@ -44,10 +44,10 @@ int decryptDES(void){
 
     char *result;
     int ok;
-
+    struct crypt_data data[1] = {0};
     /* Read in the user's password and encrypt it,
        passing the expected password in as the salt. */
-    result = crypt(getpass("Password:"), pass);
+    result = crypt_r(getpass("Password:"), pass,data);
 
     /* Test the result. */
     ok = strcmp (result, pass) == 0;
