@@ -11,24 +11,33 @@
 using namespace std;
 
 void SplashScreen() {
-    cout << "############################"<<endl;
+    cout << "###############################################################"<<endl;
     cout << "Questo programma implementa un attacco brute-force per"<< endl;
     cout << "decifrare password di otto caratteri crittografate con DES"<< endl;
     cout << "confrontando i costi computazionali di una versione sequentail"<< endl;
     cout << "e di una versione parallela di un attacco brute-force alle password,"<< endl;
     cout << "valutando la velocità ottenuta in diverse situazioni di test"<< endl;
     cout << "tramite parallelizzazione."<< endl;
-    cout << "############################"<<endl;
+    cout << "################################################################"<<endl;
 }
 
-void SplashResult(string& title,SequentialRes& seqr) {
-    cout << "############################"<<endl;
+void SplashResult(string& title,testResult& seqr) {
+    cout << "#####################################"<<endl;
     cout << title<< endl;
+    if( seqr.test_type==SEQUENTIAL)
+        cout << "TEST SEQUENZIALE"<< endl;
+    else if( seqr.test_type==PARALLEL)
+        cout << "TEST PARALLELO"<< endl;
+    else
+        cout<<"TEST TYPE NON DEFINITO"<< endl;
+
+    cout << "Numero Totale di password: "<<seqr.num_password<< endl;
+    cout << "Numero di Iterazioni: "<<seqr.num_iter<< endl;
     cout << "Tempo medio: "<<seqr.mean_time<< endl;
     cout << "Deviazione Standard: "<<seqr.stddev_time<< endl;
     cout << "Tempo massimo: "<<seqr.max_time<< endl;
     cout << "Tempo minimo: "<<seqr.min_time<< endl;
-    cout << "############################"<<endl;
+    cout << "#####################################"<<endl;
 }
 
 

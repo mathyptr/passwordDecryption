@@ -6,16 +6,21 @@
 
 using namespace std;
 
-struct SequentialRes {
+enum testType { SEQUENTIAL, PARALLEL };
+
+struct testResult {
     double mean_time;
     double stddev_time;
     double max_time;
     double min_time;
+    int num_password;
+    int num_iter;
+    testType  test_type;
 };
 
 
 void SplashScreen();
-void SplashResult(string& title,SequentialRes& seqr);
+void SplashResult(string& title,testResult& seqr);
 void choosePwd(vector<string> passwordList,string& password);
 void buildFilePasswords(const string& filein, const string& fileout);
 //void buildFilePasswords(const string& filein, const string& fileout, const string& password, int& pos);

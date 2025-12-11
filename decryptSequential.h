@@ -7,6 +7,6 @@
 
 using namespace std;
 
-SequentialRes TestSeq(const std::string& password,const std::string& salt,std::vector<std::string> passwordList,int iter);
+testResult TestSeq(const std::string& password,const std::string& salt,std::vector<std::string> passwordList,int iter);
 
 #endif // DECRYPT_SEQUENTIAL_H

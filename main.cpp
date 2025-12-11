@@ -9,13 +9,14 @@
 #include "util.h"
 #include "utilCrypt.h"
 #include "decryptSequential.h"
+#include "decryptParallel.h"
 
 int main() {
     int nthreads, tid;
     tid = -1;
 
 
-    string crypted_password = cryptDES("password");
+    string crypted_password = cryptDES("password","prova");
     std::cout << "pwd crypted " <<crypted_password<< std::endl;
 
     std::string file_in = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/rockyou.txt";
@@ -35,10 +36,14 @@ int main() {
     choosePwd(passwordList, password);
     cout << "I test saranno effettuati su questa password:"<<password<<endl;
 
-    SequentialRes seqr;
+    testResult seqr;
     seqr=TestSeq(password, "abc",passwordList,10);
     std::string title="Risultati test sequenziale";
     SplashResult(title,seqr);
+
+    std::vector<testResult> parr;
+    std::vector<int> thread_counts = { 2, 3, 4, 5,6,7,8,9,10 };
+    parr=testPar(password, "abc",passwordList,thread_counts,10);
 
 #ifdef _OPENMP
     std::cout << "_OPENMP defined" << std::endl;

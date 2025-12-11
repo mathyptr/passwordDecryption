@@ -129,6 +129,30 @@ passwordDecryption/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/passwordDecryption.dir/build.make CMakeFiles/passwordDecryption.dir/build
 .PHONY : passwordDecryption/fast
 
+decryptParallel.o: decryptParallel.cpp.o
+.PHONY : decryptParallel.o
+
+# target to build an object file
+decryptParallel.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/passwordDecryption.dir/build.make CMakeFiles/passwordDecryption.dir/decryptParallel.cpp.o
+.PHONY : decryptParallel.cpp.o
+
+decryptParallel.i: decryptParallel.cpp.i
+.PHONY : decryptParallel.i
+
+# target to preprocess a source file
+decryptParallel.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/passwordDecryption.dir/build.make CMakeFiles/passwordDecryption.dir/decryptParallel.cpp.i
+.PHONY : decryptParallel.cpp.i
+
+decryptParallel.s: decryptParallel.cpp.s
+.PHONY : decryptParallel.s
+
+# target to generate assembly for a file
+decryptParallel.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/passwordDecryption.dir/build.make CMakeFiles/passwordDecryption.dir/decryptParallel.cpp.s
+.PHONY : decryptParallel.cpp.s
+
 decryptSequential.o: decryptSequential.cpp.o
 .PHONY : decryptSequential.o
 
@@ -234,6 +258,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... passwordDecryption"
+	@echo "... decryptParallel.o"
+	@echo "... decryptParallel.i"
+	@echo "... decryptParallel.s"
 	@echo "... decryptSequential.o"
 	@echo "... decryptSequential.i"
 	@echo "... decryptSequential.s"

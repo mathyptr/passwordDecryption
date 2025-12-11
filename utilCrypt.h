@@ -4,6 +4,6 @@
 using namespace std;
 
 //string cryptDES(const std::string& password,const std::string& salt);
-string cryptDES(const std::string& password);
+string cryptDES(const std::string& password, const std::string& salt);
 
 #endif // UTIL_CRYPT_H
