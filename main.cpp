@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
+#include <filesystem>
 
 #include "util.h"
 #include "utilCrypt.h"
@@ -15,15 +16,21 @@ int main() {
     int nthreads, tid;
     tid = -1;
 
-
     string crypted_password = cryptDES("password","prova");
     std::cout << "pwd crypted " <<crypted_password<< std::endl;
 
-    std::string file_in = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/rockyou.txt";
-    std::string file_out = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/password_file.txt";  ///< File delle password
-    std::string file_tmp = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/password_file.tmp";  ///< File delle password per i test
-    std::string file_inSeq = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/resultSEQ.csv";
-    std::string file_inPar = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/resultPAR.csv";
+    std::cout << "Directory corrente: " << filesystem::current_path() << '\n';
+//    std::string file_in = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/rockyou.txt";
+//    std::string file_out = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/password_file.txt";  ///< File delle password
+//    std::string file_tmp = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/password_file.tmp";  ///< File delle password per i test
+//    std::string file_inSeq = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/resultSEQ.csv";
+//    std::string file_inPar = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/resultPAR.csv";
+
+    std::string file_in = "./resource/rockyou.txt";
+    std::string file_out = "./resource/password_file.txt";
+    std::string file_tmp = "./resource/password_file.tmp";
+    std::string file_inSeq = "./resource/resultSEQ.csv";
+    std::string file_inPar = "./resource/resultPAR.csv";
 
 
     SplashScreen();
