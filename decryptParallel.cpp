@@ -6,7 +6,6 @@
 #include <string>
 #include <chrono>
 #include <algorithm>
-#include <immintrin.h>
 
 using namespace std;
 
