@@ -68,6 +68,7 @@ int main() {
     std::cout << "OpenMP version: " << _OPENMP << std::endl;
     std::cout << "Num processors (Phys+HT): " << omp_get_num_procs() << std::endl;
 #endif
+
     std::vector<testResult> parr;
     std::vector<int> thread_counts = { 2,4 };
     parr=testPar(password, salt,passwordList,thread_counts,iter);
