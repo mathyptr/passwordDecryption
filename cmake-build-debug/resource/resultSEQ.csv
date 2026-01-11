@@ -1,0 +1,2 @@
+testType,numThreads,chunkSize,meanTime,stdDev,maxTime,minTime,numIter,totalPasswords
+SEQUENZIALE,1,0,10.0273,6.32249,19.5554,2.10842,4,2965748

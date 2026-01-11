@@ -66,6 +66,7 @@ std::vector<testResult> testPar(const std::string& password, const std::string& 
             std::vector<double> execTimes;
             const size_t list_size = passwordList.size();
             int block = passwordList.size() / iter;
+            int pospwd=block/2;
 
 //################ Set OpenMP ################
             omp_set_dynamic(0);
@@ -76,8 +77,8 @@ std::vector<testResult> testPar(const std::string& password, const std::string& 
                 cout << "############################"<<endl;
                 cout << "Iter num: " << i + 1<< endl;
 
-                pwdtmp=passwordList[block*i];
-                passwordList[block*i]=password;
+                pwdtmp=passwordList[block*i+pospwd];
+                passwordList[block*i+pospwd]=password;
 
                 std::string encrypted_password = cryptDES(password, salt);
 
@@ -89,7 +90,7 @@ std::vector<testResult> testPar(const std::string& password, const std::string& 
                 std::chrono::duration<double> elapsed = end - start;
                 execTimes.push_back(elapsed.count());
 
-                passwordList[block*i]=pwdtmp;
+                passwordList[block*i+pospwd]=pwdtmp;
 
                 cout << " (chunk size " << chunkSize << "): "<< endl;
                 cout << "Tempo: " << elapsed.count() << " secondi. "<< endl;
