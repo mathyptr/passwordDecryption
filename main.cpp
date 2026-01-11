@@ -13,103 +13,66 @@
 #include "decryptParallel.h"
 
 int main() {
-    int nthreads, tid;
-    tid = -1;
 
     string crypted_password = cryptDES("password","prova");
     std::cout << "pwd crypted " <<crypted_password<< std::endl;
 
     std::cout << "Directory corrente: " << filesystem::current_path() << '\n';
-//    std::string file_in = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/rockyou.txt";
-//    std::string file_out = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/password_file.txt";  ///< File delle password
-//    std::string file_tmp = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/password_file.tmp";  ///< File delle password per i test
-//    std::string file_inSeq = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/resultSEQ.csv";
-//    std::string file_inPar = "/mnt/datadisk1/c++/clion/passwordDecryption/resource/resultPAR.csv";
 
     std::string file_in = "./resource/rockyou.txt";
     std::string file_out = "./resource/password_file.txt";
-    std::string file_tmp = "./resource/password_file.tmp";
     std::string file_inSeq = "./resource/resultSEQ.csv";
     std::string file_inPar = "./resource/resultPAR.csv";
 
 
     SplashScreen();
 
+//*****************************************+*********************************************
+//    Lettura file password e creazione del file con password conformi alle specifiche
+//*****************************************+*********************************************
     std::cout << "Lettura file password e selezione delle password conformi..." << std::endl;
     buildFilePasswords(file_in, file_out);
     std::cout << "Password conformi salvate in: " << file_out << std::endl;
 
     std::string password;
 
+//*****************************************+*********************************************
+//    Lettura file password conformi alle specifiche
+//*****************************************+*********************************************
     std::vector<std::string> passwordList = loadPasswords(file_out);
+
+//*****************************************+*********************************************
+//    Selezione password di test
+//*****************************************+*********************************************
     choosePwd(passwordList, password);
     cout << "I test saranno effettuati su questa password: "<<password<<endl;
 
+//*****************************************+*********************************************
+//    INIZIO TEST
+//*****************************************+*********************************************
     int iter = 4;
-
     std::vector<testResult> seqr;
-    seqr.push_back(TestSeq(password, "abc",passwordList,iter));
-    std::string title="Risultati test sequenziale";
-    SplashResult(title,seqr);
-    saveResultToFile(file_inSeq,seqr);
+    std::string title;
+    std::string salt="ab";
 
-    std::vector<testResult> parr;
-    std::vector<int> thread_counts = { 2,4 };
-    parr=testPar(password, "abc",passwordList,thread_counts,iter);
-    SplashResult(title,parr);
-    saveResultToFile(file_inPar,parr);
+//    Test Sequenziale
+    seqr.push_back(TestSeq(password, salt,passwordList,iter));
+    title="Risultati test sequenziale";
+    SplashResult(title,seqr); //Visualizzazione Risultati Test Sequenziale
+    saveResultToFile(file_inSeq,seqr); //Salvataggio su file risultati Test Sequenziale
+
+//    Test Parallelo
 #ifdef _OPENMP
     std::cout << "_OPENMP defined" << std::endl;
     // OpenMP major + minor version
     std::cout << "OpenMP version: " << _OPENMP << std::endl;
     std::cout << "Num processors (Phys+HT): " << omp_get_num_procs() << std::endl;
 #endif
+    std::vector<testResult> parr;
+    std::vector<int> thread_counts = { 2,4 };
+    parr=testPar(password, salt,passwordList,thread_counts,iter);
+    title="Risultati test parallelo";
+    SplashResult(title,parr); //Visualizzazione Risultati Test Parallelo
+    saveResultToFile(file_inPar,parr);  //Salvataggio su file risultati Test Parallelo
 
-    printf("Global copy of tid before threads execution = %d\n", tid);
-
-/* Fork a team of threads giving them their own copies of variables */
-#pragma omp parallel private(nthreads, tid) default(none)
-    {
-        /* Obtain thread number */
-        tid = omp_get_thread_num();
-        printf("Hello World from thread = %d\n", tid);
-
-        /* Only master thread does this */
-        if (tid == 0) {
-            nthreads = omp_get_num_threads();
-            printf("Master thread - Number of threads = %d\n", nthreads);
-        }
-
-        tid += 100;
-        printf("Local copy of tid = %d\n", tid);
-
-    }  /* All threads join master thread and are destroyed */
-    printf("Global copy of tid after threads execution = %d\n", tid);
-
-    // Bernstein's conditions and OpenMP
-    {
-        const long n = 100;
-        int A[n];
-        int histo[n];
-#pragma omp parallel for default(none) shared(A, n)
-        for (int i = 0; i < n; i++)
-            A[i] = i;
-        // XXX the following code will produce bad results !
-#pragma omp parallel for default(none) shared(A, n)
-        for (int i = 1; i < n; i++)
-            A[i] = A[i - 1];
-#pragma omp parallel default(none) shared(histo, A, n)
-        {
-#pragma omp for
-            for (int i = 0; i < n; i++)
-                histo[i] = 0;
-#pragma omp for
-            for (int i = 0; i < n; i++)
-                histo[A[i]]++;
-        }
-        for (int i=0; i<n; i++) {
-            if (histo[i]>1)
-                printf("i: %d - count: %d\n", i, histo[i]);
-        }
-    }
 }

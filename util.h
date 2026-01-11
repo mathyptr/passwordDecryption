@@ -26,7 +26,6 @@ void SplashResult(string& title,std::vector<testResult>& seqr);
 void saveResultToFile(const std::string& filename,std::vector<testResult>& result);
 void choosePwd(vector<string>& passwordList,string& password);
 void buildFilePasswords(const string& filein, const string& fileout);
-//void buildFilePasswords(const string& filein, const string& fileout, const string& password, int& pos);
 std::vector<std::string> loadPasswords(const std::string& filepwd);
 double minTime(std::vector<double> execTimes);
 double maxTime(std::vector<double> execTimes);
