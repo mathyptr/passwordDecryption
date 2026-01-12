@@ -48,9 +48,14 @@ int main() {
     cout << "I test saranno effettuati su questa password: "<<password<<endl;
 
 //*****************************************+*********************************************
+//    Inserimento del numero di iterazioni
+//*****************************************+*********************************************
+    int iter;
+    cout << "Inserisci il numero di iterazioni: "<<endl;
+    cin >> iter;
+//*****************************************+*********************************************
 //    INIZIO TEST
 //*****************************************+*********************************************
-    int iter = 4;
     std::vector<testResult> seqr;
     std::string title;
     std::string salt="ab";
@@ -63,14 +68,19 @@ int main() {
 
 //    Test Parallelo
 #ifdef _OPENMP
+    int maxThreads = omp_get_max_threads();
+
     std::cout << "_OPENMP defined" << std::endl;
     // OpenMP major + minor version
     std::cout << "OpenMP version: " << _OPENMP << std::endl;
-    std::cout << "Num processors (Phys+HT): " << omp_get_num_procs() << std::endl;
+    std::cout << "Numero massimo di thread disponibili: " << maxThreads << std::endl;
 #endif
 
     std::vector<testResult> parr;
-    std::vector<int> thread_counts = { 2,4 };
+    std::vector<int> thread_counts;
+    // Test con diversi numeri di thread (potenze di 2)
+    for (int numThreads = 2; numThreads <= maxThreads; numThreads *= 2)
+        thread_counts.push_back(numThreads);
     parr=testPar(password, salt,passwordList,thread_counts,iter);
     title="Risultati test parallelo";
     SplashResult(title,parr); //Visualizzazione Risultati Test Parallelo
