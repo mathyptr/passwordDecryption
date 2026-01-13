@@ -78,8 +78,8 @@ int main() {
 
     std::vector<testResult> parr;
     std::vector<int> thread_counts;
-    // Test con diversi numeri di thread (potenze di 2)
-    for (int numThreads = 2; numThreads <= maxThreads; numThreads *= 2)
+    // Test con diversi numeri di thread
+    for (int numThreads = 2; numThreads <= maxThreads; numThreads ++)
         thread_counts.push_back(numThreads);
     parr=testPar(password, salt,passwordList,thread_counts,iter);
     title="Risultati test parallelo";

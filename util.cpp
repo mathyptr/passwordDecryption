@@ -90,7 +90,7 @@ void choosePwd(vector<string>& passwordList,string& password) {
 
             if (choice == 1) {
                 password=pwd;
-                cout << "Hai scelto la password:"<<password<<endl;
+                cout << "Hai scelto la password: "<<password<<endl;
                 passwordList.erase(passwordList.begin() + i);
                 viewOtherPWD = false;
                 break;
