@@ -14,6 +14,9 @@
 
 using namespace std;
 
+/*********************************************************
+**** Funzione per la descrizione a video del programma ***
+*********************************************************/
 void SplashScreen() {
     cout << "###############################################################"<<endl;
     cout << "Questo programma implementa un attacco brute-force per"<< endl;
@@ -25,6 +28,15 @@ void SplashScreen() {
     cout << "################################################################"<<endl;
 }
 
+/**********************************************************
+***** Funzione per la visualizzazione dei risultati:  *****
+      -Numero Totale di password
+      -Numero di Iterazioni
+      -Tempo medio
+      -Deviazione Standard
+      -Tempo massimo
+      -Tempo minimo
+**********************************************************/
 void SplashResult(string& title,std::vector<testResult>& result) {
     cout << "#####################################"<<endl;
     cout << title<< endl;
@@ -48,6 +60,11 @@ void SplashResult(string& title,std::vector<testResult>& result) {
     }
 }
 
+/***************************************************************************************************
+******* Funzione per salvare i risultati su file csv.                                        *******
+******* Intestazione di colonna:                                                             *******
+******* testType,numThreads,chunkSize,meanTime,stdDev,maxTime,minTime,numIter,totalPasswords *******
+************************************************************************************é**************/
 void saveResultToFile(const std::string& filename,std::vector<testResult>& result) {
     std::ofstream fileCSV(filename);
     fileCSV << "testType,numThreads,chunkSize,meanTime,stdDev,maxTime,minTime,numIter,totalPasswords"<< endl;
@@ -70,9 +87,11 @@ void saveResultToFile(const std::string& filename,std::vector<testResult>& resul
     }
 }
 
+/*************************************************************************
+**** Funzione per la selezione della password su cui effettuare i test ***
+*************************************************************************/
 void choosePwd(vector<string>& passwordList,string& password) {
 
-    string pwd;
     password="";
     cout << endl<<"============================="<< endl;
     cout << "   Scegli una password"<< endl;
@@ -100,10 +119,11 @@ void choosePwd(vector<string>& passwordList,string& password) {
             i++;
         }
     }
-    return ;
 }
 
-
+/****************************************************************************************
+****** Funzione per la creazione dei file delle  password su cui effettuare i test  *****
+****************************************************************************************/
 void buildFilePasswords(const string& filein, const string& fileout) {
 
     if(filesystem::exists(fileout)) {
@@ -148,7 +168,9 @@ void buildFilePasswords(const string& filein, const string& fileout) {
     outputf.close();
 }
 
-
+/****************************************************************************************
+**** Funzione per la lettura delle password da un dizionario di password su file     ****
+****************************************************************************************/
 std::vector<std::string> loadPasswords(const std::string& filepwd) {
     std::vector<std::string> passwords;
     std::ifstream filep(filepwd);
@@ -161,19 +183,32 @@ std::vector<std::string> loadPasswords(const std::string& filepwd) {
     return passwords;
 }
 
+/******************************************************
+***** Funzione per il calcolo del tempo minimo    *****
+*******************************************************/
 double minTime(std::vector<double> execTimes) {
 
     return *std::min_element(execTimes.begin(), execTimes.end());
 }
+/******************************************************
+***** Funzione per il calcolo del tempo massimo   *****
+*******************************************************/
 double maxTime(std::vector<double> execTimes) {
 
     return *std::max_element(execTimes.begin(), execTimes.end());
 }
+
+/*******************************************************
+***** Funzione per il calcolo del tempo medio      *****
+*******************************************************/
 double meanTime(std::vector<double> execTimes) {
 
     return std::accumulate(execTimes.begin(), execTimes.end(), 0.0)/ execTimes.size();
 }
 
+/*********************************************************
+**** Funzione per il calcolo della deviazione standard ***
+*********************************************************/
 double stdDev(std::vector<double> execTimes) {
     double variance = 0.0;
     for (const auto& time : execTimes)
@@ -182,7 +217,9 @@ double stdDev(std::vector<double> execTimes) {
 }
 
 
-           
+/*********************************************************
+****************** Funzione di test OMP ******************
+*********************************************************/
 void testOMP(){
     int nthreads, tid;
     tid = -1;
