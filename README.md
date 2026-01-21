@@ -13,16 +13,16 @@ This implementation relies on the POSIX crypt() function, a standard for passwor
 ## Proposed solutions
 To address the password decryption problem, this project develops a comparative study between sequential and parallel computational models. All implementations are written in the C++ programming language. The proposed methodologies consist of the following distinct versions:
 
-1. Sequential: A single-threaded baseline implementation.
+1. Sequential: a single-threaded baseline implementation.
 
-2. Parallel OMP: A multi-threaded solution utilizing OpenMP directives for concurrent execution
+2. Parallel OMP: a multi-threaded solution utilizing OpenMP directives for concurrent execution.
 
 ## Dataset
 Given that our project targets an eight-character password space within the specific [a-zA-Z0-9./] character set, we implemented a dedicated preprocessing pipeline for the RockYou dataset.
 
 RockYou.txt:
 Originating from a 2009 security breach, the RockYou.txt wordlist was born when the RockYou social application suffered a cyberattack exposing over 32 million credentials. The gravity of the leak was intensified by the fact that passwords were stored in plaintext—a fundamental security failure. Today, this dataset is an industry-standard resource for penetration testers and IT administrators. By
-employing this list within tools like Hashcat or John the Ripper, security experts can simulate real-world attacks to identify authentication
+employing this list within tools like Hashcat or John the Ripper, security experts can simulate real-world attacks to identify authentication.
 
 ## Requirements
 In order to run the code are required:
