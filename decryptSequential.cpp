@@ -9,7 +9,7 @@
 using namespace std;
 
 //**************************************************************************************************
-//Funzione che verifa la presenza della password scelta all'interno del dizionario delle password
+//Funzione che verica la presenza della password scelta all'interno del dizionario delle password
 //**************************************************************************************************
 int checkPwd(const std::string& crypted_password,const std::string& salt, const vector<std::string>& passwordList){
   std::string pwddecrypted;

@@ -10,7 +10,7 @@
 using namespace std;
 
 //**************************************************************************************************
-//Funzione che verifa la presenza della password scelta all'interno del dizionario delle password
+//Funzione che verica la presenza della password scelta all'interno del dizionario delle password
 //utilizzando il parallelismo OMP
 //**************************************************************************************************
 std::string ompDecryption(const std::string& encrypted_password, const std::string& salt,
