@@ -21,7 +21,7 @@ To address the password decryption problem, this project develops a comparative 
 Given that our project targets an eight-character password space within the specific [a-zA-Z0-9./] character set, we implemented a dedicated preprocessing pipeline for the RockYou dataset.
 
 RockYou.txt:
-Originating from a 2009 security breach, the RockYou.txt wordlist was born when the RockYou social application suffered a cyberattack exposing over 32 million credentials. The gravity of the leak was intensified by the fact that passwords were stored in plaintext—a fundamental security failure. Today, this dataset is an industry-standard resource for penetration testers and IT administrators. By
+Originating from a 2009 security breach, the RockYou.txt wordlist was born when the RockYou social application suffered a cyberattack exposing over 32 million credentials. The gravity of the leak was intensified by the fact that passwords were stored in plaintex, a fundamental security failure. Today, this dataset is an industry-standard resource for penetration testers and IT administrators. By
 employing this list within tools like Hashcat or John the Ripper, security experts can simulate real-world attacks to identify authentication.
 
 ## Requirements
